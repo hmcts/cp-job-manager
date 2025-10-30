@@ -103,7 +103,7 @@ Build without tests:
 
 ## Dependencies
 
-The project uses explicit dependency versions (no BOM). Key dependencies include:
+The project uses explicit dependency versions managed in the root `build.gradle` file. All versions are centralized in the `ext.versions` map for easy maintenance. Key dependencies include:
 
 **Core Dependencies:**
 - **SLF4J 1.7.36** - Logging facade
