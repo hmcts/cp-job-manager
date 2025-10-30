@@ -11,15 +11,19 @@ import org.postgresql.Driver;
 
 public class TestJobStoreDataSourceProvider implements JobStoreDataSourceProvider {
 
-    private static final String EVENT_STORE_URL = "jdbc:postgresql://" + getHost() + ":5432/frameworkjobstore";
+    private static final String DEFAULT_PORT = "55432";
     private static final String EVENT_STORE_USER_NAME = "framework";
     private static final String EVENT_STORE_PASSWORD = "framework";
 
     public DataSource getJobStoreDataSource() {
+        // Get port from system property (set by docker-compose plugin) or use default
+        String port = System.getProperty("POSTGRES_PORT", DEFAULT_PORT);
+        String host = getHost();
+        String jdbcUrl = "jdbc:postgresql://" + host + ":" + port + "/frameworkjobstore";
 
         final BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setJdbcDriver(Driver.class.getName());
-        basicDataSource.setJdbcUrl(EVENT_STORE_URL);
+        basicDataSource.setJdbcUrl(jdbcUrl);
         basicDataSource.setUserName(EVENT_STORE_USER_NAME);
         basicDataSource.setPassword(EVENT_STORE_PASSWORD);
 

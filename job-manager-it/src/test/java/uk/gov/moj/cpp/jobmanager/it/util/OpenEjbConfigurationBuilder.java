@@ -43,9 +43,14 @@ public class OpenEjbConfigurationBuilder {
     }
 
     private OpenEjbConfigurationBuilder getPostgresqlConfig(String dbName) {
+        // Get host and port from system properties (set by docker-compose plugin)
+        String host = System.getProperty("INTEGRATION_HOST_KEY", "localhost");
+        String port = System.getProperty("POSTGRES_PORT", "55432");
+        String jdbcUrl = String.format("jdbc:postgresql://%s:%s/frameworkjobstore", host, port);
+        
         this.configuration.put(dbName, "new://Resource?type=DataSource");
         this.configuration.put(String.format("%s.JdbcDriver", dbName), "org.postgresql.Driver");
-        this.configuration.put(String.format("%s.JdbcUrl", dbName), "jdbc:postgresql://localhost:5432/frameworkjobstore");
+        this.configuration.put(String.format("%s.JdbcUrl", dbName), jdbcUrl);
         this.configuration.put(String.format("%s.JtaManaged", dbName), true);
         this.configuration.put(String.format("%s.UserName", dbName), "framework");
         this.configuration.put(String.format("%s.Password", dbName), "framework");
