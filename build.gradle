@@ -1,7 +1,7 @@
 plugins {
-    java
-    jacoco
-    `java-library`
+    id 'java'
+    id 'jacoco'
+    id 'java-library'
 }
 
 allprojects {
@@ -15,27 +15,27 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "java")
-    apply(plugin = "jacoco")
-    apply(plugin = "java-library")
+    apply plugin: 'java'
+    apply plugin: 'jacoco'
+    apply plugin: 'java-library'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    tasks.withType<JavaCompile> {
+    tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        options.release = 17
     }
 
-    tasks.withType<Test> {
+    tasks.withType(Test) {
         useJUnitPlatform()
         maxHeapSize = "64m"
         
         // Only include actual test classes (end with Test or Tests)
-        include("**/*Test.class")
-        include("**/*Tests.class")
+        include "**/*Test.class"
+        include "**/*Tests.class"
     }
 
     jacoco {
@@ -43,15 +43,14 @@ subprojects {
     }
 
     tasks.jacocoTestReport {
-        dependsOn(tasks.test)
+        dependsOn tasks.test
     }
 
     dependencies {
         // BOM import for dependency management
-        implementation(platform("uk.gov.justice:maven-common-bom:17.104.0-M1"))
+        implementation platform("uk.gov.justice:maven-common-bom:17.104.0-M1")
         
         // JUnit Jupiter Engine required for tests to run
-        testImplementation("org.junit.jupiter:junit-jupiter-engine")
+        testImplementation "org.junit.jupiter:junit-jupiter-engine"
     }
 }
-

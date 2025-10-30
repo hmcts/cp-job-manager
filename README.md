@@ -1,7 +1,13 @@
 # cp-job-manager
 
-A stateful multithreaded job and task executor.
+A stateful multithreaded job and task executor for HMCTS.
 
+
+
+A job+task execution engine capable of managing multiple concurrent workloads.
+Execution state tracking (enqueue → running → complete/fail)
+Thread pool-based parallel processing
+Priority awareness
 
 ## Prerequisites
 
@@ -10,13 +16,24 @@ A stateful multithreaded job and task executor.
 
 ## Project Structure
 
-This is a multi-module Gradle project with the following modules:
+This is a multi-module Gradle project using Groovy DSL with the following modules:
 
-- **jobstore-liquibase** - Liquibase database migration scripts
-- **jobstore-persistence** - Data persistence layer
-- **jobstore-api** - Public API interfaces
-- **job-executor** - Job execution engine
-- **job-manager-it** - Integration tests
+- **jobstore-liquibase** - Liquibase database migration scripts and configuration
+- **jobstore-persistence** - Data persistence layer with JPA/Hibernate
+- **jobstore-api** - Public API interfaces and data models
+- **job-executor** - Core job execution engine and task management
+- **job-manager-it** - Integration tests and end-to-end testing
+
+## Technology Stack
+
+- **Java 17** - Programming language
+- **Gradle 8.5** - Build tool with Groovy DSL
+- **JUnit 5** - Testing framework
+- **Mockito** - Mocking framework
+- **JaCoCo** - Code coverage analysis
+- **Liquibase** - Database migration tool
+- **PostgreSQL** - Database (for persistence layer)
+- **OpenEJB** - Java EE container for testing
 
 ## Building
 
@@ -86,7 +103,37 @@ Build without tests:
 
 ## Dependencies
 
+The project uses the Ministry of Justice (MoJ) common BOM for dependency management:
+
+- **uk.gov.justice:maven-common-bom:17.104.0-M1** - Centralized dependency version management
+
+Key dependencies include:
+- **SLF4J** - Logging facade
+- **Guava** - Google Core Libraries
+- **Jackson** - JSON processing
+- **PostgreSQL Driver** - Database connectivity
+- **OpenEJB** - Java EE container for testing
+
+## Development
+
+### IDE Support
+
+The project is configured to work with:
+- **IntelliJ IDEA** - Primary IDE (`.idea` directory ignored)
+- **VS Code** - Alternative IDE (`.vscode` directory ignored)
+- **Eclipse/STS** - Eclipse-based IDEs (`.project`, `.classpath` ignored)
+
+### Code Quality
+
+- **JaCoCo** integration for code coverage reporting
+- **JUnit 5** for unit and integration testing
+- **Mockito** for mocking in tests
+- **Hamcrest** for test assertions
 
 ## Version
 
 Current version: `1.0.0-SNAPSHOT`
+
+## License
+
+This project is licensed under the terms specified in the LICENSE file.

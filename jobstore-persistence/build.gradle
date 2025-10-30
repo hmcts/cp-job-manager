@@ -1,0 +1,23 @@
+dependencies {
+    // Compile dependencies
+    compileOnly "javax:javaee-api"
+    implementation "org.slf4j:slf4j-api"
+    implementation "com.google.guava:guava"
+    implementation "com.fasterxml.jackson.core:jackson-core"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "javax.json:javax.json-api"
+    implementation("org.apache.tomee:openejb-core") {
+        exclude group: "commons-beanutils", module: "commons-beanutils-core"
+    }
+    implementation "org.postgresql:postgresql"
+
+    // Test dependencies
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "org.mockito:mockito-core"
+    testImplementation "org.mockito:mockito-junit-jupiter"
+    testImplementation "org.hamcrest:hamcrest"
+    testImplementation "org.slf4j:jcl-over-slf4j"
+    testImplementation "org.glassfish:javax.json"
+    testImplementation "org.liquibase:liquibase-core"
+    testImplementation project(":jobstore-liquibase")
+}

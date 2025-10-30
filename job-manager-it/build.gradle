@@ -1,0 +1,22 @@
+dependencies {
+    // Compile dependencies
+    implementation "com.google.guava:guava"
+    implementation project(":jobstore-api")
+    implementation project(":jobstore-persistence")
+
+    // Test dependencies
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "org.hamcrest:hamcrest"
+    testImplementation "javax:javaee-api"
+    testImplementation "org.apache.tomee:openejb-core:8.0.13"
+    testImplementation "org.apache.tomee:openejb-junit5:8.0.13"
+    testImplementation project(":jobstore-liquibase")
+    testImplementation project(":job-executor")
+    testImplementation "commons-logging:commons-logging"
+    testImplementation "org.liquibase:liquibase-core"
+    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8"
+    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr353"
+    testImplementation "com.fasterxml.jackson.module:jackson-module-parameter-names"
+    testImplementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
+}
