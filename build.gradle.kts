@@ -1,0 +1,57 @@
+plugins {
+    java
+    jacoco
+    `java-library`
+}
+
+allprojects {
+    group = "uk.gov.justice.services"
+    version = "1.0.0-SNAPSHOT"
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+subprojects {
+    apply(plugin = "java")
+    apply(plugin = "jacoco")
+    apply(plugin = "java-library")
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    tasks.withType<JavaCompile> {
+        options.encoding = "UTF-8"
+        options.release.set(17)
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+        maxHeapSize = "64m"
+        
+        // Only include actual test classes (end with Test or Tests)
+        include("**/*Test.class")
+        include("**/*Tests.class")
+    }
+
+    jacoco {
+        toolVersion = "0.8.8"
+    }
+
+    tasks.jacocoTestReport {
+        dependsOn(tasks.test)
+    }
+
+    dependencies {
+        // BOM import for dependency management
+        implementation(platform("uk.gov.justice:maven-common-bom:17.104.0-M1"))
+        
+        // JUnit Jupiter Engine required for tests to run
+        testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    }
+}
+
