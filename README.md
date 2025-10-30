@@ -103,16 +103,26 @@ Build without tests:
 
 ## Dependencies
 
-The project uses the Ministry of Justice (MoJ) common BOM for dependency management:
+The project uses explicit dependency versions (no BOM). Key dependencies include:
 
-- **uk.gov.justice:maven-common-bom:17.104.0-M1** - Centralized dependency version management
+**Core Dependencies:**
+- **SLF4J 1.7.36** - Logging facade
+- **Guava 31.1-jre** - Google Core Libraries
+- **Jackson 2.14.2** - JSON processing
+- **PostgreSQL Driver 42.5.4** - Database connectivity
 
-Key dependencies include:
-- **SLF4J** - Logging facade
-- **Guava** - Google Core Libraries
-- **Jackson** - JSON processing
-- **PostgreSQL Driver** - Database connectivity
+**Java EE Dependencies:**
+- **Java EE API 8.0** - Java Enterprise Edition API
+- **CDI API 2.0** - Contexts and Dependency Injection
+- **Transaction API 1.3** - Java Transaction API
+
+**Testing Dependencies:**
+- **JUnit 5.9.3** - Testing framework
+- **Mockito 4.6.1** - Mocking framework
+- **Hamcrest 2.2** - Test matchers
 - **OpenEJB** - Java EE container for testing
+- **Awaitility 4.2.0** - Async testing utilities
+- **Liquibase 4.19.1** - Database migration tool
 
 ## Development
 

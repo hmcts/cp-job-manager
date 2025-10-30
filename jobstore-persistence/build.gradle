@@ -1,21 +1,21 @@
 dependencies {
     // Compile dependencies
-    compileOnly "javax:javaee-api"
-    implementation "org.slf4j:slf4j-api"
-    implementation "com.google.guava:guava"
-    implementation "com.fasterxml.jackson.core:jackson-core"
-    implementation "com.fasterxml.jackson.core:jackson-databind"
-    implementation "javax.json:javax.json-api"
-    implementation("org.apache.tomee:openejb-core") {
+    compileOnly "javax:javaee-api:8.0"
+    implementation "org.slf4j:slf4j-api:1.7.36"
+    implementation "com.google.guava:guava:31.1-jre"
+    implementation "com.fasterxml.jackson.core:jackson-core:2.14.2"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.14.2"
+    implementation "javax.json:javax.json-api:1.1.4"
+    implementation("org.apache.tomee:openejb-core:9.0.0-M8") {
         exclude group: "commons-beanutils", module: "commons-beanutils-core"
     }
-    implementation "org.postgresql:postgresql"
+    implementation "org.postgresql:postgresql:42.5.4"
 
     // Test dependencies
-    testImplementation "org.junit.jupiter:junit-jupiter-api"
-    testImplementation "org.hamcrest:hamcrest"
-    testImplementation "org.slf4j:jcl-over-slf4j"
-    testImplementation "org.glassfish:javax.json"
-    testImplementation "org.liquibase:liquibase-core"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.3"
+    testImplementation "org.hamcrest:hamcrest:2.2"
+    testImplementation "org.slf4j:jcl-over-slf4j:1.7.36"
+    testImplementation "org.glassfish:javax.json:1.1.4"
+    testImplementation "org.liquibase:liquibase-core:4.19.1"
     testImplementation project(":jobstore-liquibase")
 }

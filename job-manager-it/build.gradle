@@ -1,22 +1,22 @@
 dependencies {
     // Compile dependencies
-    implementation "com.google.guava:guava"
+    implementation "com.google.guava:guava:31.1-jre"
     implementation project(":jobstore-api")
     implementation project(":jobstore-persistence")
 
     // Test dependencies
-    testImplementation "org.junit.jupiter:junit-jupiter-api"
-    testImplementation "org.hamcrest:hamcrest"
-    testImplementation "javax:javaee-api"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.3"
+    testImplementation "org.hamcrest:hamcrest:2.2"
+    testImplementation "javax:javaee-api:8.0"
     testImplementation "org.apache.tomee:openejb-core:8.0.13"
     testImplementation "org.apache.tomee:openejb-junit5:8.0.13"
     testImplementation project(":jobstore-liquibase")
     testImplementation project(":job-executor")
-    testImplementation "commons-logging:commons-logging"
-    testImplementation "org.liquibase:liquibase-core"
-    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8"
-    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
-    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr353"
-    testImplementation "com.fasterxml.jackson.module:jackson-module-parameter-names"
-    testImplementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml"
+    testImplementation "commons-logging:commons-logging:1.2"
+    testImplementation "org.liquibase:liquibase-core:4.19.1"
+    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.14.2"
+    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.14.2"
+    testImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr353:2.14.2"
+    testImplementation "com.fasterxml.jackson.module:jackson-module-parameter-names:2.14.2"
+    testImplementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2"
 }
