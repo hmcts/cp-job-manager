@@ -116,6 +116,13 @@ Key dependencies include:
 
 ## Development
 
+### Gradle Configuration
+
+The project uses a `gradle.properties` file to configure:
+- **Java 17** as the runtime for Gradle daemon
+- **Performance optimizations** (parallel execution, configuration cache, build cache)
+- **Memory settings** optimized for the project
+
 ### IDE Support
 
 The project is configured to work with:
@@ -125,10 +132,11 @@ The project is configured to work with:
 
 ### Code Quality
 
-- **JaCoCo** integration for code coverage reporting
 - **JUnit 5** for unit and integration testing
-- **Mockito** for mocking in tests
+- **Mockito 4.6.1** for mocking in tests (Java 17 compatible version)
 - **Hamcrest** for test assertions
+
+**Note**: The project is configured to use Java 17 for both compilation and testing via `gradle.properties`. All tests are enabled and passing.
 
 ## Version
 

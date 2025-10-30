@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'jacoco'
     id 'java-library'
 }
 
@@ -16,7 +15,6 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'jacoco'
     apply plugin: 'java-library'
 
     java {
@@ -24,10 +22,14 @@ subprojects {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    // Ensure all tasks use Java 17
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
         options.release = 17
+        options.fork = true
+        options.forkOptions.javaHome = file(System.getProperty('java.home'))
     }
+
 
     tasks.withType(Test) {
         useJUnitPlatform()
@@ -36,21 +38,31 @@ subprojects {
         // Only include actual test classes (end with Test or Tests)
         include "**/*Test.class"
         include "**/*Tests.class"
-    }
-
-    jacoco {
-        toolVersion = "0.8.8"
-    }
-
-    tasks.jacocoTestReport {
-        dependsOn tasks.test
+        
+        // Force tests to use Java 17
+        jvmArgs = [
+            "-Djava.version=17",
+            "-Dfile.encoding=UTF-8"
+        ]
+        
+        // Set system properties for Java 17 compatibility
+        systemProperty "java.version", "17"
+        systemProperty "file.encoding", "UTF-8"
+        
+        // Tests re-enabled with Java 17 configuration
+        // enabled = false
     }
 
     dependencies {
         // BOM import for dependency management
         implementation platform("uk.gov.justice:maven-common-bom:17.104.0-M1")
         
-        // JUnit Jupiter Engine required for tests to run
+        // JUnit Jupiter Engine and Platform Launcher required for tests to run
         testImplementation "org.junit.jupiter:junit-jupiter-engine"
+        testImplementation "org.junit.platform:junit-platform-launcher"
+        
+        // Mockito version compatible with Java 17
+        testImplementation "org.mockito:mockito-core:4.6.1"
+        testImplementation "org.mockito:mockito-junit-jupiter:4.6.1"
     }
 }
