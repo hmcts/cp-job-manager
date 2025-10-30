@@ -1,0 +1,10 @@
+dependencies {
+    // Compile dependencies
+    compileOnly "javax:javaee-api:${versions.javaeeApi}"
+    implementation project(":jobstore-persistence")
+
+    // Test dependencies
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${versions.junit}"
+    testImplementation "org.hamcrest:hamcrest:${versions.hamcrest}"
+    testImplementation "org.glassfish:javax.json:${versions.glassfishJson}"
+}
