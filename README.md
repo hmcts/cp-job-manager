@@ -9,6 +9,11 @@ Execution state tracking (enqueue → running → complete/fail)
 Thread pool-based parallel processing
 Priority awareness
 
+The azure artifacts can be browsed with public access here https://dev.azure.com/hmcts/Artifacts/_artifacts/feed/hmcts-lib Once a repository artifact has been used locally, it will be visible in our local .gradle repository i.e.
+
+cd $HOME/.gradle
+find . -name cp-job-manager.* -ls
+
 ## Prerequisites
 
 - Java 21 or higher
