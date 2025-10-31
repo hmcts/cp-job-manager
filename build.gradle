@@ -1,8 +1,15 @@
 plugins {
-    id 'java'
-    id 'java-library'
+    id 'maven-publish'
     id 'com.avast.gradle.docker-compose' version '0.17.12'
 }
+
+def githubActor = project.findProperty("github.actor") ?: System.getenv("GITHUB_ACTOR")
+def githubToken = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
+def githubRepo = System.getenv("GITHUB_REPOSITORY")
+
+def azureADOArtifactRepository = 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1'
+def azureADOArtifactActor = System.getenv("AZURE_DEVOPS_ARTIFACT_USERNAME")
+def azureADOArtifactToken = System.getenv("AZURE_DEVOPS_ARTIFACT_TOKEN")
 
 allprojects {
     group = "uk.gov.justice.services"
@@ -58,8 +65,37 @@ ext.versions = [
 ]
 
 subprojects {
-    apply plugin: 'java'
     apply plugin: 'java-library'
+    
+    publishing {
+        publications {
+            // Only create publication if it doesn't already exist
+            // The java-library plugin may auto-create it
+            if (!publications.findByName('mavenJava')) {
+                mavenJava(MavenPublication) {
+                    from components.java
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/$githubRepo")
+                credentials {
+                    username = githubActor
+                    password = githubToken
+                }
+            }
+            maven {
+                name = "AzureArtifacts"
+                url = uri(azureADOArtifactRepository)
+                credentials {
+                    username = azureADOArtifactActor
+                    password = azureADOArtifactToken
+                }
+            }
+        }
+    }
     
     // Apply docker-compose plugin to modules that need PostgreSQL
     if (project.name in ['jobstore-persistence', 'job-manager-it']) {
