@@ -19,6 +19,47 @@ allprojects {
         mavenCentral()
         mavenLocal()
     }
+    
+    // Configure publishing repositories for all projects (root and subprojects)
+    apply plugin: 'maven-publish'
+    
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/$githubRepo")
+                credentials {
+                    username = githubActor
+                    password = githubToken
+                }
+            }
+            maven {
+                name = "AzureArtifacts"
+                url = uri(azureADOArtifactRepository)
+                credentials {
+                    username = azureADOArtifactActor
+                    password = azureADOArtifactToken
+                }
+            }
+        }
+    }
+}
+
+// Publish root project as POM-only (no source code)
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
+            
+            pom {
+                name = project.name
+                description = 'A stateful multithreaded job and task executor for HMCTS'
+                packaging = 'pom'
+            }
+        }
+    }
 }
 
 // Centralized dependency versions
@@ -67,6 +108,7 @@ ext.versions = [
 subprojects {
     apply plugin: 'java-library'
     
+    // Configure publications for subprojects (JAR artifacts)
     publishing {
         publications {
             // Only create publication if it doesn't already exist
@@ -74,24 +116,6 @@ subprojects {
             if (!publications.findByName('mavenJava')) {
                 mavenJava(MavenPublication) {
                     from components.java
-                }
-            }
-        }
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/$githubRepo")
-                credentials {
-                    username = githubActor
-                    password = githubToken
-                }
-            }
-            maven {
-                name = "AzureArtifacts"
-                url = uri(azureADOArtifactRepository)
-                credentials {
-                    username = azureADOArtifactActor
-                    password = azureADOArtifactToken
                 }
             }
         }
