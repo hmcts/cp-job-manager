@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'java-library'
+    id 'com.avast.gradle.docker-compose' version '0.17.12'
 }
 
 allprojects {
@@ -59,16 +60,54 @@ ext.versions = [
 subprojects {
     apply plugin: 'java'
     apply plugin: 'java-library'
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+    
+    // Apply docker-compose plugin to modules that need PostgreSQL
+    if (project.name in ['jobstore-persistence', 'job-manager-it']) {
+        apply plugin: 'com.avast.gradle.docker-compose'
+        
+        dockerCompose {
+            useComposeFiles = ["${rootProject.projectDir}/docker-compose.yml"]
+            captureContainersOutput = false
+            stopContainers = true
+            removeContainers = true
+            removeVolumes = false // Keep volumes for faster subsequent runs
+            waitForTcpPorts = true
+            waitForTcpPortsTimeout = java.time.Duration.ofMinutes(2)
+            projectName = 'cp-job-manager' // Use consistent project name
+        }
+        
+        // Clean up before composeUp to handle stuck containers
+        tasks.named('composeUp') {
+            doFirst {
+                // Clean up any existing containers and networks before starting
+                try {
+                    exec {
+                        commandLine 'sh', '-c', '''
+                            docker ps -aq --filter "name=cp-job-manager-postgres" | xargs -r docker rm -f 2>/dev/null || true
+                            docker network rm cp-job-manager_default 2>/dev/null || true
+                            docker-compose -f ${rootProject.projectDir}/docker-compose.yml -p cp-job-manager down --remove-orphans 2>/dev/null || true
+                        '''
+                        ignoreExitValue = true
+                    }
+                } catch (Exception e) {
+                    // Ignore cleanup errors
+                }
+            }
+        }
     }
 
-    // Ensure all tasks use Java 17
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    // Ensure all tasks use Java 21
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
-        options.release = 17
+        options.release = 21
         options.fork = true
         options.forkOptions.javaHome = file(System.getProperty('java.home'))
     }
@@ -82,17 +121,50 @@ subprojects {
         include "**/*Test.class"
         include "**/*Tests.class"
         
-        // Force tests to use Java 17
+        // Force tests to use Java 21
         jvmArgs = [
-            "-Djava.version=17",
+            "-Djava.version=21",
             "-Dfile.encoding=UTF-8"
         ]
         
-        // Set system properties for Java 17 compatibility
-        systemProperty "java.version", "17"
+        // Set system properties for Java 21 compatibility
+        systemProperty "java.version", "21"
         systemProperty "file.encoding", "UTF-8"
         
-        // Tests re-enabled with Java 17 configuration
+        // Disable build cache for tests that depend on external services (like PostgreSQL)
+        // This ensures tests always run and catch database connectivity issues
+        outputs.cacheIf { false }
+        
+        // Configure docker-compose for tests that need PostgreSQL
+        if (project.name in ['jobstore-persistence', 'job-manager-it']) {
+            // Use a shared root-level composeUp task to avoid conflicts
+            def sharedComposeUp = rootProject.tasks.findByName('composeUp')
+            if (sharedComposeUp == null) {
+                // Create root-level composeUp task if it doesn't exist
+                rootProject.apply plugin: 'com.avast.gradle.docker-compose'
+                rootProject.dockerCompose {
+                    useComposeFiles = ["${rootProject.projectDir}/docker-compose.yml"]
+                    captureContainersOutput = false
+                    stopContainers = true
+                    removeContainers = true
+                    removeVolumes = false
+                    waitForTcpPorts = true
+                    waitForTcpPortsTimeout = java.time.Duration.ofMinutes(2)
+                    projectName = 'cp-job-manager'
+                }
+                sharedComposeUp = rootProject.tasks.named('composeUp')
+            }
+            
+            dependsOn sharedComposeUp
+            finalizedBy project.tasks.named('composeDown')
+            
+            // Set port and host for docker-compose services
+            // Port 55432 is hardcoded in docker-compose.yml
+            systemProperty "POSTGRES_PORT", "55432"
+            systemProperty "INTEGRATION_HOST_KEY", "localhost"
+        }
+        
+        // Tests re-enabled with Java 21 configuration
         // enabled = false
     }
 
@@ -101,7 +173,7 @@ subprojects {
         testImplementation "org.junit.jupiter:junit-jupiter-engine:${versions.junit}"
         testImplementation "org.junit.platform:junit-platform-launcher:${versions.junitPlatform}"
         
-        // Mockito version compatible with Java 17
+        // Mockito version compatible with Java 21
         testImplementation "org.mockito:mockito-core:${versions.mockito}"
         testImplementation "org.mockito:mockito-junit-jupiter:${versions.mockito}"
     }
