@@ -1,0 +1,21 @@
+dependencies {
+    // Compile dependencies
+    compileOnly "javax:javaee-api:${versions.javaeeApi}"
+    compileOnly "javax.transaction:javax.transaction-api:${versions.transactionApi}"
+    compileOnly "javax.enterprise:cdi-api:${versions.cdiApi}"
+    implementation "org.slf4j:slf4j-api:${versions.slf4j}"
+    implementation project(":jobstore-api")
+    implementation project(":jobstore-persistence")
+
+    // Test dependencies
+    testImplementation "javax:javaee-api:${versions.javaeeApi}"
+    testImplementation "javax.transaction:javax.transaction-api:${versions.transactionApi}"
+    testImplementation "javax.enterprise:cdi-api:${versions.cdiApi}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${versions.junit}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${versions.junit}"
+    testImplementation "org.hamcrest:hamcrest:${versions.hamcrest}"
+    testImplementation "org.awaitility:awaitility:${versions.awaitility}"
+    testImplementation "org.apache.tomee:openejb-core:${versions.tomee}"
+    testImplementation "org.glassfish:javax.json:${versions.glassfishJson}"
+    testImplementation project(":jobstore-liquibase")
+}

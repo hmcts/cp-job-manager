@@ -1,61 +1,41 @@
-# Java
+gradle/
+bin/*
+!bin/run-in-docker.sh
+.gradle
+/build/
 *.class
+bin/main/application.yaml
 
-# Package Files
-*.jar
-*.war
-*.ear
-*.rar
-*.puml
-
-# Thumbnails
-Thumbs.db
-
-# Object files (no binaries in git repos!)
-*.obj
-*.exe
-*.so
-*.zip
-*.tar
-*.gz
-
-# Mac
-.fseventsd/
-.Spotlight-V100/
-.Trashes/
-._.Trashes
-
-# Eclipse
+### STS ###
+.apt_generated
 .classpath
-.compatibility
-.project
-.pydevproject
 .factorypath
-.checkstyle
-.metadata/
-.settings/
-.pmd
+.project
+.settings
+.gradle/
 .springBeans
-.tern-project
 
-# IntelliJ
-.idea/
+### IntelliJ IDEA ###
+.idea
+/out
+*.iws
 *.iml
+*.ipr
+*/target/
+*/build/
 
-# Maven
-target/
+### VS Code ###
+.vscode
 
-# Subversion
-.svn/
 
-# Misc
-*~
+
+
+.DS_Store
+
+applicationinsights-agent-*.jar
 *.log
-*.orig
-*.sonar
-deployWars.sh
-buildContexts.sh
 
+.env
 
-lightning-jenkins.properties
-**/.DS_Store
+.DS_Store
+*/.DS_Store

@@ -1,0 +1,21 @@
+dependencies {
+    // Compile dependencies
+    compileOnly "javax:javaee-api:${versions.javaeeApi}"
+    implementation "org.slf4j:slf4j-api:${versions.slf4j}"
+    implementation "com.google.guava:guava:${versions.guava}"
+    implementation "com.fasterxml.jackson.core:jackson-core:${versions.jackson}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}"
+    implementation "javax.json:javax.json-api:${versions.jsonApi}"
+    implementation("org.apache.tomee:openejb-core:${versions.tomee}") {
+        exclude group: "commons-beanutils", module: "commons-beanutils-core"
+    }
+    implementation "org.postgresql:postgresql:${versions.postgresql}"
+
+    // Test dependencies
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${versions.junit}"
+    testImplementation "org.hamcrest:hamcrest:${versions.hamcrest}"
+    testImplementation "org.slf4j:jcl-over-slf4j:${versions.slf4j}"
+    testImplementation "org.glassfish:javax.json:${versions.glassfishJson}"
+    testImplementation "org.liquibase:liquibase-core:${versions.liquibase}"
+    testImplementation project(":jobstore-liquibase")
+}

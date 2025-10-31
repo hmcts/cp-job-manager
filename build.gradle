@@ -1,0 +1,108 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+allprojects {
+    group = "uk.gov.justice.services"
+    version = "1.0.0-SNAPSHOT"
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+// Centralized dependency versions
+ext.versions = [
+    // Java EE APIs
+    javaeeApi: '8.0',
+    transactionApi: '1.3',
+    cdiApi: '2.0',
+    
+    // Logging
+    slf4j: '1.7.36',
+    
+    // Google Libraries
+    guava: '31.1-jre',
+    
+    // Jackson
+    jackson: '2.14.2',
+    
+    // JSON APIs
+    jsonApi: '1.1.4',
+    glassfishJson: '1.1.4',
+    
+    // Application Server
+    tomee: '9.0.0-M8',
+    tomeeLegacy: '8.0.13',
+    
+    // Database
+    postgresql: '42.5.4',
+    
+    // Testing - JUnit
+    junit: '5.9.3',
+    junitPlatform: '1.9.3',
+    
+    // Testing - Mockito
+    mockito: '4.6.1',
+    
+    // Testing - Others
+    hamcrest: '2.2',
+    awaitility: '4.2.0',
+    liquibase: '4.19.1',
+    
+    // Commons
+    commonsLogging: '1.2'
+]
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    // Ensure all tasks use Java 17
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        options.release = 17
+        options.fork = true
+        options.forkOptions.javaHome = file(System.getProperty('java.home'))
+    }
+
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+        maxHeapSize = "64m"
+        
+        // Only include actual test classes (end with Test or Tests)
+        include "**/*Test.class"
+        include "**/*Tests.class"
+        
+        // Force tests to use Java 17
+        jvmArgs = [
+            "-Djava.version=17",
+            "-Dfile.encoding=UTF-8"
+        ]
+        
+        // Set system properties for Java 17 compatibility
+        systemProperty "java.version", "17"
+        systemProperty "file.encoding", "UTF-8"
+        
+        // Tests re-enabled with Java 17 configuration
+        // enabled = false
+    }
+
+    dependencies {
+        // JUnit Jupiter Engine and Platform Launcher required for tests to run
+        testImplementation "org.junit.jupiter:junit-jupiter-engine:${versions.junit}"
+        testImplementation "org.junit.platform:junit-platform-launcher:${versions.junitPlatform}"
+        
+        // Mockito version compatible with Java 17
+        testImplementation "org.mockito:mockito-core:${versions.mockito}"
+        testImplementation "org.mockito:mockito-junit-jupiter:${versions.mockito}"
+    }
+}
