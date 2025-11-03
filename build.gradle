@@ -1,6 +1,6 @@
 plugins {
     id 'maven-publish'
-    id 'com.avast.gradle.docker-compose' version '0.17.12'
+    id 'com.avast.gradle.docker-compose' version '0.17.19'
 }
 
 def githubActor = project.findProperty("github.actor") ?: System.getenv("GITHUB_ACTOR")
@@ -65,44 +65,44 @@ publishing {
 // Centralized dependency versions
 ext.versions = [
     // Java EE APIs
-    javaeeApi: '8.0',
+    javaeeApi: '8.0.1',
     transactionApi: '1.3',
     cdiApi: '2.0',
     
     // Logging
-    slf4j: '1.7.36',
+    slf4j: '2.0.17',
     
     // Google Libraries
-    guava: '31.1-jre',
+    guava: '33.5.0-jre',
     
     // Jackson
-    jackson: '2.14.2',
+    jackson: '2.20.1',
     
     // JSON APIs
     jsonApi: '1.1.4',
     glassfishJson: '1.1.4',
     
     // Application Server
-    tomee: '9.0.0-M8',
-    tomeeLegacy: '8.0.13',
+    tomee: '10.1.2',
+    tomeeLegacy: '10.1.2',
     
     // Database
-    postgresql: '42.5.4',
+    postgresql: '42.7.8',
     
     // Testing - JUnit
-    junit: '5.9.3',
-    junitPlatform: '1.9.3',
+    junit: '6.0.1',
+    junitPlatform: '6.0.1',
     
     // Testing - Mockito
-    mockito: '4.6.1',
+    mockito: '5.20.0',
     
     // Testing - Others
-    hamcrest: '2.2',
-    awaitility: '4.2.0',
-    liquibase: '4.19.1',
+    hamcrest: '3.0',
+    awaitility: '4.3.0',
+    liquibase: '5.0.1',
     
     // Commons
-    commonsLogging: '1.2'
+    commonsLogging: '1.3.5'
 ]
 
 subprojects {
