@@ -9,7 +9,7 @@ import static uk.gov.justice.services.common.converter.ZonedDateTimes.fromSqlTim
 import static uk.gov.justice.services.common.converter.ZonedDateTimes.toSqlTimestamp;
 import static uk.gov.justice.services.messaging.JsonObjects.jsonReaderFactory;
 
-import uk.gov.justice.framework.libraries.datasource.providers.jobstore.JobStoreDataSourceProvider;
+import uk.gov.justice.datasource.jobstore.JobStoreDataSourceProvider;
 import uk.gov.justice.services.common.converter.ZonedDateTimes;
 
 import java.io.StringReader;

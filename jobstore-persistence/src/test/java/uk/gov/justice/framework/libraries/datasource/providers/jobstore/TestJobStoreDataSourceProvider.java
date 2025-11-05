@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.apache.openejb.resource.jdbc.dbcp.BasicDataSource;
 import org.postgresql.Driver;
+import uk.gov.justice.datasource.jobstore.JobStoreDataSourceProvider;
 
 public class TestJobStoreDataSourceProvider implements JobStoreDataSourceProvider {
 

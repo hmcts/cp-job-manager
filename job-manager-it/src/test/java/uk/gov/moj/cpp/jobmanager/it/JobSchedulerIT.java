@@ -6,7 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
-import uk.gov.justice.framework.libraries.datasource.providers.jobstore.JndiJobStoreDataSourceProvider;
+import uk.gov.justice.datasource.jobstore.JndiJobStoreDataSourceProvider;
 import uk.gov.justice.services.cdi.InitialContextProducer;
 import uk.gov.justice.services.cdi.LoggerProducer;
 import uk.gov.justice.services.common.configuration.GlobalValueProducer;
