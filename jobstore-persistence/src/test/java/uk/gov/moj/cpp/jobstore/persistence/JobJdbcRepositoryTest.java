@@ -20,7 +20,7 @@ import static uk.gov.moj.cpp.jobstore.persistence.Priority.HIGH;
 import static uk.gov.moj.cpp.jobstore.persistence.Priority.LOW;
 import static uk.gov.moj.cpp.jobstore.persistence.Priority.MEDIUM;
 
-import uk.gov.justice.framework.libraries.datasource.providers.jobstore.JobStoreDataSourceProvider;
+import uk.gov.justice.datasource.jobstore.JobStoreDataSourceProvider;
 import uk.gov.justice.framework.libraries.datasource.providers.jobstore.TestJobStoreDataSourceProvider;
 import uk.gov.justice.services.common.util.UtcClock;
 import uk.gov.justice.services.test.utils.core.jdbc.LiquibaseDatabaseBootstrapper;

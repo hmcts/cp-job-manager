@@ -1,4 +1,4 @@
-package uk.gov.justice.framework.libraries.datasource.providers;
+package uk.gov.justice.datasource;
 
 public class DatasourceAcquisitionException extends RuntimeException {
 

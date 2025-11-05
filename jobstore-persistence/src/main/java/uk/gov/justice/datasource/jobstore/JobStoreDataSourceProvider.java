@@ -1,4 +1,4 @@
-package uk.gov.justice.framework.libraries.datasource.providers.jobstore;
+package uk.gov.justice.datasource.jobstore;
 
 import javax.sql.DataSource;
 

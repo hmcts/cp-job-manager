@@ -12,7 +12,7 @@ import static uk.gov.moj.cpp.jobstore.persistence.Priority.HIGH;
 import static uk.gov.moj.cpp.jobstore.persistence.Priority.LOW;
 import static uk.gov.moj.cpp.jobstore.persistence.Priority.MEDIUM;
 
-import uk.gov.justice.framework.libraries.datasource.providers.jobstore.JndiJobStoreDataSourceProvider;
+import uk.gov.justice.datasource.jobstore.JndiJobStoreDataSourceProvider;
 import uk.gov.justice.services.cdi.InitialContextProducer;
 import uk.gov.justice.services.cdi.LoggerProducer;
 import uk.gov.justice.services.common.configuration.GlobalValueProducer;
