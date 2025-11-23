@@ -12,6 +12,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.deser.BeanDeserializer;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerBase;
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -44,10 +45,12 @@ public class AdditionalPropertiesDeserializer extends BeanDeserializer {
                 }
                 additionalPropertiesMap.put(propName, value);
             } else {
-                throw context.mappingException("Expected target object to have additionalProperties attribute! [" + bean.getClass() + "]");
+                throw JsonMappingException.from(jsonParser, String.format("Expected target object to have additionalProperties attribute! [%s]", bean.getClass()));
             }
+        } catch (final JsonMappingException ex) {
+            throw ex;
         } catch (final Exception ex) {
-            throw context.mappingException("Couldn't add [" + propName + "] to additionalProperties attribute!", ex);
+            throw JsonMappingException.from(jsonParser, String.format("Couldn't add [%s] to additionalProperties attribute!", propName), ex);
         }
     }
 
@@ -83,7 +86,7 @@ public class AdditionalPropertiesDeserializer extends BeanDeserializer {
                 obj = null;
                 break;
             default:
-                throw context.mappingException(this.handledType());
+                throw JsonMappingException.from(jsonParser, String.format("Unexpected token: %s", jsonToken));
         }
         return obj;
     }

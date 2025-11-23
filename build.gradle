@@ -1,6 +1,6 @@
 plugins {
     id 'maven-publish'
-    id 'com.avast.gradle.docker-compose' version '0.17.19'
+    id 'com.avast.gradle.docker-compose' version '0.17.20'
 }
 
 def githubActor = project.findProperty("github.actor") ?: System.getenv("GITHUB_ACTOR")

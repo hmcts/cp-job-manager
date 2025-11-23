@@ -1,13 +1,11 @@
 package uk.gov.justice.services.common.converter.jackson.integerenum;
 
-import static com.fasterxml.jackson.databind.AnnotationIntrospector.nopInstance;
-import static com.fasterxml.jackson.databind.util.EnumResolver.constructFor;
-
 import com.fasterxml.jackson.databind.BeanDescription;
 import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
+import com.fasterxml.jackson.databind.introspect.AnnotatedClass;
 import com.fasterxml.jackson.databind.util.EnumResolver;
 
 public class IntegerEnumBeanDeserializerModifier extends BeanDeserializerModifier {
@@ -20,9 +18,9 @@ public class IntegerEnumBeanDeserializerModifier extends BeanDeserializerModifie
             final BeanDescription beanDesc,
             final JsonDeserializer<?> deserializer) {
 
-        final Class<Enum<?>> enumClass = (Class<Enum<?>>) type.getRawClass();
+        final AnnotatedClass annotatedClass = beanDesc.getClassInfo();
 
-        final EnumResolver enumResolver = constructFor(enumClass, nopInstance());
+        final EnumResolver enumResolver = EnumResolver.constructFor(config, annotatedClass);
 
         return new IntegerEnumDeserializer(
                 enumResolver,

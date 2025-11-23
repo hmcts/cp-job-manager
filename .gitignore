@@ -1,5 +1,6 @@
 gradle/
 bin/*
+*/bin/*
 !bin/run-in-docker.sh
 .gradle
 /build/
@@ -23,7 +24,7 @@ bin/main/application.yaml
 *.ipr
 */target/
 */build/
-
+*/bin/
 ### VS Code ###
 .vscode
 
