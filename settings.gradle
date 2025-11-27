@@ -5,6 +5,7 @@ include(
     "jobstore-persistence",
     "jobstore-api",
     "job-executor",
-    "job-manager-it"
+    "job-manager-it",
+    "spring-boot-app"
 )
 

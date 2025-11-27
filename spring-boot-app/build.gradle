@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'uk.gov.justice.services'
+version = '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    // Spring Boot starters
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // Liquibase for database migrations
+    implementation 'org.liquibase:liquibase-core'
+    
+    // PostgreSQL driver
+    implementation "org.postgresql:postgresql:${versions.postgresql}"
+    
+    // Jobstore modules
+    implementation project(':jobstore-api')
+    implementation project(':jobstore-persistence')
+    implementation project(':job-executor')
+    implementation project(':jobstore-liquibase')
+    
+    // JSON processing
+    implementation "javax.json:javax.json-api:${versions.jsonApi}"
+    implementation "org.glassfish:javax.json:${versions.glassfishJson}"
+    
+    // Logging
+    implementation "org.slf4j:slf4j-api:${versions.slf4j}"
+    
+    // Guava
+    implementation "com.google.guava:guava:${versions.guava}"
+    
+    // Jakarta annotation API for @PostConstruct
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
+    
+    // Test dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${versions.junit}"
+    testImplementation "org.hamcrest:hamcrest:${versions.hamcrest}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+

@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: jobstore-spring-boot-app
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jobstore
+    username: jobstore
+    password: jobstore
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: none  # Let Liquibase handle schema management
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+  
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/jobstore-db-changelog.xml
+    default-schema: public
+    liquibase-schema: public
+    drop-first: false
+
+# Jobstore configuration
+jobstore:
+  scheduler:
+    # How often to check for new jobs (in milliseconds)
+    timer-interval: 5000
+    # Initial delay before first check (in milliseconds)
+    timer-start-wait: 2000
+    # Number of jobs to fetch per worker
+    worker-job-count: 5
+  module-name: spring-boot-jobstore
+
+# Logging
+logging:
+  level:
+    root: INFO
+    uk.gov.moj.cpp: DEBUG
+    uk.gov.justice.services: DEBUG
+    org.springframework: INFO
+    liquibase: INFO
+
