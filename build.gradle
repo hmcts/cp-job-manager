@@ -94,7 +94,7 @@ ext.versions = [
     junitPlatform: '6.0.1',
     
     // Testing - Mockito
-    mockito: '5.20.0',
+    mockito: '5.21.0',
     
     // Testing - Others
     hamcrest: '3.0',
