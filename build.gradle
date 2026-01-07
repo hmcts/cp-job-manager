@@ -83,18 +83,18 @@ ext.versions = [
     glassfishJson: '1.1.4',
     
     // Application Server
-    tomee: '10.1.2',
-    tomeeLegacy: '10.1.2',
+    tomee: '10.1.3',
+    tomeeLegacy: '10.1.3',
     
     // Database
     postgresql: '42.7.8',
     
     // Testing - JUnit
-    junit: '6.0.1',
-    junitPlatform: '6.0.1',
+    junit: '6.0.2',
+    junitPlatform: '6.0.2',
     
     // Testing - Mockito
-    mockito: '5.20.0',
+    mockito: '5.21.0',
     
     // Testing - Others
     hamcrest: '3.0',
