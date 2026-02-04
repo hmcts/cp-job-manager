@@ -1,6 +1,6 @@
 plugins {
     id 'maven-publish'
-    id 'com.avast.gradle.docker-compose' version '0.17.20'
+    id 'com.avast.gradle.docker-compose' version '0.17.21'
 }
 
 def githubActor = project.findProperty("github.actor") ?: System.getenv("GITHUB_ACTOR")
@@ -76,25 +76,25 @@ ext.versions = [
     guava: '33.5.0-jre',
     
     // Jackson
-    jackson: '2.20.1',
+    jackson: '2.21.0',
     
     // JSON APIs
     jsonApi: '1.1.4',
     glassfishJson: '1.1.4',
     
     // Application Server
-    tomee: '10.1.2',
-    tomeeLegacy: '10.1.2',
+    tomee: '10.1.4',
+    tomeeLegacy: '10.1.4',
     
     // Database
-    postgresql: '42.7.8',
+    postgresql: '42.7.9',
     
     // Testing - JUnit
-    junit: '6.0.1',
-    junitPlatform: '6.0.1',
+    junit: '6.0.2',
+    junitPlatform: '6.0.2',
     
     // Testing - Mockito
-    mockito: '5.20.0',
+    mockito: '5.21.0',
     
     // Testing - Others
     hamcrest: '3.0',
